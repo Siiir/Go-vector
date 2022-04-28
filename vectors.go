@@ -1,3 +1,3 @@
-package vectors
+package vector
 
 func Pass() {}

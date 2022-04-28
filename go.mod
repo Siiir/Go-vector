@@ -1,3 +1,3 @@
-module github.com/Siiir/vectors
+module github.com/Siiir/vector
 
 go 1.17
