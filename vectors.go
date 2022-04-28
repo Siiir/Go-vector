@@ -1,0 +1,3 @@
+package vectors
+
+func Pass() {}
