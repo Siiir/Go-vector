@@ -2,9 +2,9 @@ package vector
 
 import "math"
 
-func Sq(vec []float64) (sq float64) {
+func Sq(vec []float64) (sumOfSq float64) {
 	for _, v := range vec {
-		sq += v * v
+		sumOfSq += v * v
 	}
 	return
 }

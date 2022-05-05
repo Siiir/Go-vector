@@ -1,7 +1,5 @@
 package vector
 
-import "math"
-
 func Normalize(vec []float64) {
 	DivByScalar(vec, CalcNorm(vec))
 }
@@ -28,36 +26,63 @@ func Remaped(sl []float64,
 	return
 }
 
-func Proj(
+func ForceProj( /// Works with dim-alignment
+	/// But is it still mathematical (no hidden contradiction?)? I must talk to algebra teacher.
 	baseVec []float64,
 	targetVec []float64,
-	dotProd func(vec1, vec2 []float64) float64,
+	forceDotProd func(vec1, vec2 []float64) float64,
 ) []float64 {
+	/// Default arg. dotProd for cartesian cordinate
+	if forceDotProd == nil {
+		forceDotProd = ForceDotProd
+	}
+
 	return ProdWithScalar(
-		targetVec,
-		dotProd(targetVec, baseVec)/dotProd(targetVec, targetVec),
+		targetVec, // Enforceses space of `targetVec``
+		forceDotProd(targetVec, baseVec)/forceDotProd(targetVec, targetVec), // Here automatic alignment will be made
 	)
 }
 
-func ProjForCartesianSpace(baseVec, targetVec []float64) []float64 {
-	return Proj(baseVec, targetVec, DotProd)
+func NilableProj(
+	baseVec []float64,
+	targetVec []float64,
+	forceDotProd func(vec1, vec2 []float64) float64,
+) []float64 {
+	impossible := len(baseVec) != len(targetVec)
+	if impossible {
+		return nil
+	}
+	return ForceProj(baseVec, targetVec, forceDotProd)
 }
 
-func OrthogonalizedWith(vec []float64, targets ...[]float64) (
-	orthogonal []float64,
-) {
-	orthogonal = Clone(vec)
-	for _, targ := range targets {
-		ForceSub(orthogonal, ProjForCartesianSpace(vec, targ))
-	}
+func Proj(
+	baseVec []float64,
+	targetVec []float64,
+	forceDotProd func(vec1, vec2 []float64) float64,
+) (projection []float64, impossible bool) {
+
+	projection = NilableProj(baseVec, targetVec, forceDotProd)
+	impossible = projection == nil
+
 	return
 }
 
-func CosOfAngle(vec1, vec2 []float64) float64 {
-	return (DotProd(vec1, vec2) /
-		(CalcNorm(vec1) * CalcNorm(vec2)))
-}
+func OrthogonalizedWith(vec []float64, targets ...[]float64) (
+	orthogonal []float64, impossible bool,
+) {
+	// Check
+	l := len(vec)
+	for _, targ := range targets {
+		if l != len(targ) {
+			impossible = true
+			return
+		}
+	}
 
-func Angle(vec1, vec2 []float64) float64 {
-	return math.Acos(CosOfAngle(vec1, vec2))
+	// Algorithm
+	orthogonal = Clone(vec)
+	for _, targ := range targets {
+		ForceSub(orthogonal, ForceProj(vec, targ, nil))
+	}
+	return
 }
