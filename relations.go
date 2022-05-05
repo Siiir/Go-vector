@@ -2,6 +2,10 @@ package vector
 
 import "math"
 
+/// Returns true if vectors `vec1` & `vec2` are
+/// Function assumes that n-dimensional vector has trailing
+/// zeros for all dimensions > n.
+/// And so it can operate on vectors of apparently different number of dimensions.
 func AreOrthogonalAfterDimAlignment(vec1, vec2 []float64, fpErr float64) (
 	are bool,
 ) {
@@ -14,6 +18,9 @@ func AreAbsolutelyOrthogonal(vec1, vec2 []float64, fpErr float64) (
 		AreOrthogonalAfterDimAlignment(vec1, vec2, fpErr))
 }
 
+/// Function assumes that n-dimensional vector has trailing
+/// zeros for all dimensions > n.
+/// And so it can operate on vectors of apparently different number of dimensions.
 func AreParallelAfterDimAlignment(v1, v2 []float64, fpDivErr float64) (are bool) {
 	if l1, l2 := len(v1), len(v2); l1 != l2 {
 		if l1-int(NumOfTrailingZeros(v1)) != l2-int(NumOfTrailingZeros(v2)) {
