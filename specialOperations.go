@@ -1,5 +1,7 @@
 package vector
 
+import "math"
+
 func Normalize(vec []float64) {
 	DivByScalar(vec, CalcNorm(vec))
 }
@@ -49,4 +51,13 @@ func OrthogonalizedWith(vec []float64, targets ...[]float64) (
 		ForceSub(orthogonal, ProjForCartesianSpace(vec, targ))
 	}
 	return
+}
+
+func CosOfAngle(vec1, vec2 []float64) float64 {
+	return (DotProd(vec1, vec2) /
+		(CalcNorm(vec1) * CalcNorm(vec2)))
+}
+
+func Angle(vec1, vec2 []float64) float64 {
+	return math.Acos(CosOfAngle(vec1, vec2))
 }
