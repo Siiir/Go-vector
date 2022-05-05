@@ -1,21 +1,28 @@
 package vector
 
+/// Normalizes vector in place.
 func Normalize(vec []float64) {
 	DivByScalar(vec, CalcNorm(vec))
 }
 
+/// Returns a new normalized vector.
 func Normalized(vec []float64) (normalized []float64) {
 	clone := Clone(vec)
 	Normalize(clone)
 	return clone
 }
 
+/// Every `element` in given slice is transformed into f(`element`)
+/// in place.
 func Remap(sl []float64, f func(float64) float64) {
 	for i := range sl {
 		sl[i] = f(sl[i])
 	}
 }
 
+/// Return new slice with every element
+/// being an image of its counterpart from given slice.
+/// Where `f` is projecting function.
 func Remaped(sl []float64,
 	f func(float64) float64,
 ) (new []float64) {
@@ -26,6 +33,7 @@ func Remaped(sl []float64,
 	return
 }
 
+/// The sense of this function is yet UNDEFINED.
 func ForceProj( /// Works with dim-alignment
 	/// But is it still mathematical (no hidden contradiction?)? I must talk to algebra teacher.
 	baseVec []float64,
@@ -43,6 +51,9 @@ func ForceProj( /// Works with dim-alignment
 	)
 }
 
+/// If vectors have the same number of dimensions, then
+///		returns new vector being projection of `baseVec` on `targetVec`.
+/// Otherwise returns nil .
 func NilableProj(
 	baseVec []float64,
 	targetVec []float64,
@@ -55,6 +66,14 @@ func NilableProj(
 	return ForceProj(baseVec, targetVec, forceDotProd)
 }
 
+/*
+If vectors have the same number of dimensions, then returns
+	I. new vector being projection of `baseVec` on `targetVec`.
+	II. false
+Otherwise returns
+	I. nil
+	II. true
+*/
 func Proj(
 	baseVec []float64,
 	targetVec []float64,
@@ -67,22 +86,44 @@ func Proj(
 	return
 }
 
-func OrthogonalizedWith(vec []float64, targets ...[]float64) (
-	orthogonal []float64, impossible bool,
-) {
+/*
+`NilableOrthogonalizedWith` assumes that `targets` is a set of already orthogonal vectors.
+This is prerequisite for a meaningful result.
+
+If for every `el` in `targets` len(`el`) == len(`vec`), than returns
+	new vector that is orthogonal to every `el` .
+Otherwise returns nil .
+*/
+func NilableOrthogonalizedWith(vec []float64, targets ...[]float64) []float64 {
 	// Check
 	l := len(vec)
 	for _, targ := range targets {
 		if l != len(targ) {
-			impossible = true
-			return
+			return nil
 		}
 	}
 
 	// Algorithm
-	orthogonal = Clone(vec)
+	orthogonal := Clone(vec)
 	for _, targ := range targets {
 		ForceSub(orthogonal, ForceProj(vec, targ, nil))
 	}
+	return orthogonal
+}
+
+/*
+`OrthogonalizedWith` assumes that `targets` is a set of already orthogonal vectors.
+This is prerequisite for a meaningful result.
+
+If for every `el` in `targets` len(`el`) == len(`vec`), than returns
+	I. new vector that is orthogonal to every `el`
+	II. false
+Otherwise returns (nil,true)
+*/
+func OrthogonalizedWith(vec []float64, targets ...[]float64) (
+	orthogonal []float64, impossible bool,
+) {
+	orthogonal = NilableOrthogonalizedWith(vec, targets...)
+	impossible = orthogonal == nil
 	return
 }
