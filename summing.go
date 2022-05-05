@@ -23,25 +23,29 @@ func Sum(vec1, vec2 []float64) (sum []float64, impossible bool) {
 		return
 	}
 
-	sum = make([]float64, len(vec1))
-	copy(sum, vec1)
+	sum = Clone(vec1)
 	ForceAdd(sum, vec2)
 	return
 }
 
-func LongestSum(vec1, vec2 []float64) (long []float64) {
+func LongestSumSlice(vec1, vec2 []float64) (long []float64) {
 	//! The longest slice is copied.
 	//! We force addition of shorter slice to longer,
 	//!  so that we archieve longer resulting vector,
 	//! If we forced addition of larger to smaller,
 	//!  the larger slice would have to be truncated (tail'd be ommited)
+	var shorter, longer []float64
 	if len(vec1) < len(vec2) {
-		long = make([]float64, len(vec2))
-		copy(long, vec2)
+		shorter = vec1
+		longer = vec2
 	} else {
-		long = make([]float64, len(vec1))
-		copy(long, vec1)
+		shorter = vec2
+		longer = vec1
 	}
+
+	long = Clone(longer)
+	ForceAdd(long, shorter)
+
 	return
 }
 
@@ -61,27 +65,15 @@ func Sub(vec1, vec2 []float64) (impossible bool) {
 	return
 }
 
-func LongestDiff(vec1, vec2 []float64) (long []float64)
-
-func DotProd(vec1, vec2 []float64) (sumOfProd float64) {
-	defer recover()
-	for i := 0; ; i++ {
-		sumOfProd += vec1[i] * vec2[i]
-	}
-}
-
-func CrossProd(v, u []float64) ( //For 3D-3D
-	prod []float64, impossible bool,
-) {
-	impossible = len(v) != 3 || len(u) != 3
+func Diff(vec1, vec2 []float64) (diff []float64, impossible bool) {
+	impossible = len(vec1) != len(vec2)
 	if impossible {
 		return
 	}
 
-	prod = []float64{
-		v[1]*u[2] - u[1]*v[2],
-		-v[0]*u[2] + u[0]*v[2],
-		v[0]*u[1] - u[0]*v[1],
-	}
+	diff = Clone(vec1)
+	ForceSub(diff, vec2)
 	return
 }
+
+func LongestDiffSlice(vec1, vec2 []float64) (long []float64)
