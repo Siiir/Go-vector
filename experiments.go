@@ -1,3 +1,0 @@
-package vector
-
-func Pass() {}
