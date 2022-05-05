@@ -15,9 +15,9 @@ func ForceAdd(vec1, vec2 []float64) {
 	}
 }
 
-/// If vectors are of the same length, adds in place `vec2` to `vec1`
-/// and returns false.
-/// Otherwise returns true.
+// If vectors are of the same length, adds in place `vec2` to `vec1`
+// and returns false.
+// Otherwise returns true.
 func Add(vec1, vec2 []float64) (impossible bool) {
 	impossible = len(vec1) != len(vec2)
 	if impossible {
@@ -27,10 +27,12 @@ func Add(vec1, vec2 []float64) (impossible bool) {
 	return
 }
 
-/// If vectors are of the same length,
-/// 	returns their sum as newly created []float64
-///			and false as the second value.
-/// Otherwise returns (nil, true)
+/*
+If vectors are of the same length,
+	returns their sum as newly created []float64
+		and false as the second value.
+Otherwise returns (nil, true)
+*/
 func Sum(vec1, vec2 []float64) (sum []float64, impossible bool) {
 	impossible = len(vec1) != len(vec2)
 	if impossible {
@@ -83,9 +85,9 @@ func ForceSub(vec1, vec2 []float64) {
 	}
 }
 
-/// If vectors are of the same length, subtracts in place `vec2` from `vec1`
-/// and returns false.
-/// Otherwise returns true.
+// If vectors are of the same length, subtracts in place `vec2` from `vec1`
+// and returns false.
+// Otherwise returns true.
 func Sub(vec1, vec2 []float64) (impossible bool) {
 	impossible = len(vec1) != len(vec2)
 	if impossible {
@@ -95,10 +97,12 @@ func Sub(vec1, vec2 []float64) (impossible bool) {
 	return
 }
 
-/// If vectors are of the same length,
-/// 	returns their difference as newly created []float64
-///			and false as the second value.
-/// Otherwise returns (nil, true)
+/*
+If vectors are of the same length,
+	returns their difference as newly created []float64
+		and false as the second value.
+Otherwise returns (nil, true)
+*/
 func Diff(vec1, vec2 []float64) (diff []float64, impossible bool) {
 	impossible = len(vec1) != len(vec2)
 	if impossible {
