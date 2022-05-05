@@ -46,7 +46,7 @@ func OrthogonalizedWith(vec []float64, targets ...[]float64) (
 ) {
 	orthogonal = Clone(vec)
 	for _, targ := range targets {
-		Sub(orthogonal, ProjForCartesianSpace(vec, targ))
+		ForceSub(orthogonal, ProjForCartesianSpace(vec, targ))
 	}
 	return
 }
