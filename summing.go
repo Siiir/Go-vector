@@ -121,4 +121,4 @@ Function assumes that n-dimensional vector has trailing
 zeros for all dimensions > n.
 Therefore it can operate on vectors with apparently different number of dimensions.
 */
-func LongestDiffSlice(vec1, vec2 []float64) (long []float64)
+///func LongestDiffSlice(vec1, vec2 []float64) (long []float64)

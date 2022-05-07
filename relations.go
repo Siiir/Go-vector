@@ -1,6 +1,9 @@
 package vector
 
-import "math"
+import (
+	"math"
+	"reflect"
+)
 
 /*
 Returns true if vectors `vec1` & `vec2` are orthogonal.
@@ -86,4 +89,11 @@ If ratios are not whole numbers, there is high possibility of PRECISION ERROR.
 func AreAbsolutelyParallel(vec1, vec2 []float64, fpDivErr float64) (are bool) {
 	return (len(vec1) == len(vec2) &&
 		AreParallelAfterDimAlignment(vec1, vec2, fpDivErr))
+}
+
+// Are equal for first n elements
+///func PartialEqual(vec1, vec2 []float64, n uint) (equal bool)
+
+func Equal(vec1, vec2 []float64) bool {
+	return reflect.DeepEqual(vec1, vec2)
 }
