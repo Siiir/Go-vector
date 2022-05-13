@@ -60,5 +60,5 @@ func Example_randNormalF64() {
 		}
 		println()
 	}
-	//Output:
+	//:-) Output:
 }
