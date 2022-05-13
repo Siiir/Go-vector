@@ -2,7 +2,6 @@ package vector
 
 import (
 	"math"
-	"reflect"
 )
 
 /*
@@ -93,7 +92,3 @@ func AreAbsolutelyParallel(vec1, vec2 []float64, fpDivErr float64) (are bool) {
 
 // Are equal for first n elements
 ///func PartialEqual(vec1, vec2 []float64, n uint) (equal bool)
-
-func Equal(vec1, vec2 []float64) bool {
-	return reflect.DeepEqual(vec1, vec2)
-}

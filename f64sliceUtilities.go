@@ -2,23 +2,27 @@ package vector
 
 import (
 	"reflect"
-	"unsafe"
 )
 
-// Casts *float64 into uintptr
-func f64PtrVal(val *float64) uintptr {
-	return uintptr(unsafe.Pointer(val))
-}
-
-// Returns logical value of `val`∈⟨`leftInclusiveBound`,`rightInclusiveBound`⟩
-func ptrInRange(val, leftInclusiveBound, rightInclusiveBound *float64) bool {
-	v := f64PtrVal(val)
-	return (f64PtrVal(leftInclusiveBound) <= v && v <= f64PtrVal(rightInclusiveBound))
+// Returns logical value of `leftInclusiveBound` > `rightInclusiveBound`
+// where pointers are treated as their binary values.
+func IsEmptyArray(leftInclusiveBound, rightInclusiveBound *float64) bool {
+	return newUintptr(rightInclusiveBound) < newUintptr(leftInclusiveBound)
 }
 
 // Returns logical value of ⟨l1,r1⟩∩⟨l2,r2⟩=∅,
 // where pointers are treated as their binary values.
+//
+// Warning: arrays may be moved in memory => function will give meaningless output.
+// But this is hardly possible.
 func AreArraysOverlapping(l1, r1, l2, r2 *float64) bool {
+	// Check if there is an empty one.
+	for _, l_r := range [2][2]*float64{{l1, r1}, {l2, r2}} {
+		if IsEmptyArray(l_r[0], l_r[1]) {
+			return false
+		}
+	}
+
 	// Check the first range if in second
 	for _, lOrR := range [2]*float64{l1, r1} {
 		if ptrInRange(lOrR, l2, r2) {
@@ -55,6 +59,39 @@ func AreSlicingSameArray(sl1, sl2 []float64) bool {
 	l2, r2 := &sl2[0], &sl2[len(sl2)-1]
 
 	return AreArraysOverlapping(l1, r1, l2, r2)
+}
+
+// Fills []float64 with random (normal & abnormal) float values.
+func FillWithRandF64s(slice []float64) {
+	for i := range slice {
+		slice[i] = randF64()
+	}
+}
+
+// Returns new []float64 of given `length`,
+// with random (normal & abnormal) float values.
+func WithRandF64s(length uint) []float64 {
+	slice := make([]float64, length)
+	FillWithRandF64s(slice)
+	return slice
+}
+
+// Fills []float64
+// with different values obtained from rand.ExpFloat64()
+// gives all values random sign (- or +).
+func FillWithRandVals(slice []float64) {
+	for i := range slice {
+		slice[i] = randNormalF64()
+	}
+}
+
+// Returns new []float64 of given `length`,
+// with different values obtained from rand.ExpFloat64()
+// gives all values random sign (- or +).
+func WithRandVals(length uint) []float64 {
+	slice := make([]float64, length)
+	FillWithRandVals(slice)
+	return slice
 }
 
 // Returns true if given slices are deeply equal,
