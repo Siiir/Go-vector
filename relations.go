@@ -20,7 +20,7 @@ Therefore it can operate on vectors with apparently different number of dimensio
 func AreOrthogonalAfterDimAlignment(vec1, vec2 []float64, fpErr float64) (
 	are bool,
 ) {
-	return math.Abs(ForceDotProd(vec1, vec2)) < fpErr
+	return math.Abs(ForceDotProd(vec1, vec2)) <= fpErr
 }
 
 /*

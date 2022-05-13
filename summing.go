@@ -9,7 +9,7 @@ Dimensions of `vec2` that are not present in `vec1` are omitted.
 func ForceAdd(vec1, vec2 []float64) {
 	// Do not panic :) This is only loop termination.
 	// The easy & cheap way.
-	defer recover()
+	defer callRecover()
 	for i := 0; ; i++ {
 		vec1[i] += vec2[i]
 	}
@@ -79,7 +79,7 @@ Dimensions of `vec1` that are not present in `vec2` are not deincremented.
 Dimensions of `vec2` that are not present in `vec1` are omitted.
 */
 func ForceSub(vec1, vec2 []float64) {
-	defer recover()
+	defer callRecover()
 	for i := 0; ; i++ {
 		vec1[i] -= vec2[i]
 	}

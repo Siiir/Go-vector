@@ -1,13 +1,20 @@
 package vector
 
-// The sense of this function is yet UNDEFINED.
-func ForceProj( /// Works with dim-alignment
-	/// But is it still mathematical (no hidden contradiction?)? I must talk to algebra teacher.
+/*
+Returns new vector being projection of `baseVec` on `targetVec`.
+
+Function assumes that n-dimensional vector has trailing
+zeros for all dimensions > n.
+And so it can operate on vectors of apparently different number of dimensions.
+
+Note: the resulting slice will have the same number dimensions as `targetVec`.
+*/
+func ForceProj(
 	baseVec []float64,
 	targetVec []float64,
 	forceDotProd func(vec1, vec2 []float64) float64,
 ) []float64 {
-	/// Default arg. dotProd for cartesian cordinate
+	// Default arg. dotProd for cartesian cordinate system
 	if forceDotProd == nil {
 		forceDotProd = ForceDotProd
 	}
@@ -53,21 +60,11 @@ func Proj(
 	return
 }
 
-/*
-`NilableOrthogonalizedWith` presumes that `targets` is a set of already orthogonal vectors.
-This is prerequisite for a meaningful result.
-
-If for every `el` in `targets` len(`el`) == len(`vec`), than returns
-	new vector that is orthogonal to every `el` .
-Otherwise returns nil .
-*/
-func NilableOrthogonalizedWith(vec []float64, targets ...[]float64) []float64 {
-	// Check
-	l := len(vec)
-	for _, targ := range targets {
-		if l != len(targ) {
-			return nil
-		}
+/*Not examinated subfunction of `NilableOrthogonalizedWith`.*/
+func forceOrthogonalizedWith(vec []float64, targets ...[]float64) []float64 {
+	// Simple check of vector dependence.
+	if len(targets) >= len(vec) {
+		return nil
 	}
 
 	// Algorithm
@@ -76,6 +73,27 @@ func NilableOrthogonalizedWith(vec []float64, targets ...[]float64) []float64 {
 		ForceSub(orthogonal, ForceProj(vec, targ, nil))
 	}
 	return orthogonal
+}
+
+/*
+`NilableOrthogonalizedWith` presumes that `targets`
+is a set of already orthogonal (=> not-dependant) vectors.
+This is prerequisite for a meaningful result.
+
+If [for every `el` in `targets` len(`el`) == len(`vec`)] and [len(`targets`)>len(`vec`)], than returns
+	new vector that is orthogonal to every `el` .
+Otherwise returns nil .
+*/
+func NilableOrthogonalizedWith(vec []float64, targets ...[]float64) []float64 {
+	// Len. check
+	l := len(vec)
+	for _, targ := range targets {
+		if l != len(targ) {
+			return nil
+		}
+	}
+
+	return forceOrthogonalizedWith(vec, targets...)
 }
 
 /*
