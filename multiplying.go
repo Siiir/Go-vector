@@ -8,7 +8,7 @@ zeros for all dimensions > n.
 And so it can operate on vectors of apparently different number of dimensions.
 */
 func ForceDotProd(vec1, vec2 []float64) (sumOfProd float64) {
-	defer recover()
+	defer callRecover()
 	for i := 0; ; i++ {
 		sumOfProd += vec1[i] * vec2[i]
 	}
