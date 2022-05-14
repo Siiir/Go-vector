@@ -4,7 +4,7 @@ package vector
 Adds in place `vec2` to `vec1`.
 
 Dimensions of `vec1` that are not present in `vec2` are not incremented.
-Dimensions of `vec2` that are not present in `vec1` are omitted.
+Dimensions of `vec2` that are not present in `vec1` are ignored.
 */
 func ForceAdd(vec1, vec2 []float64) {
 	// Do not panic :) This is only loop termination.
@@ -52,23 +52,12 @@ zeros for all dimensions > n.
 Therefore it can operate on vectors with apparently different number of dimensions.
 */
 func LongestSumSlice(vec1, vec2 []float64) (long []float64) {
-	// The longest slice is copied.
-	// We force addition of shorter slice to longer,
-	//  so that we archieve longer resulting vector,
-	// If we forced addition of larger to smaller,
-	//  the larger slice would have to be truncated (tail'd be ommited)
-	var shorter, longer []float64
-	if len(vec1) < len(vec2) {
-		shorter = vec1
-		longer = vec2
-	} else {
-		shorter = vec2
-		longer = vec1
-	}
-
-	long = Clone(longer)
-	ForceAdd(long, shorter)
-
+	// Loading slice
+	long = make([]float64, maxInt(len(vec1), len(vec2)))
+	copy(long, vec1)
+	// Subtracting
+	ForceAdd(long, vec2)
+	// Rest
 	return
 }
 
@@ -76,7 +65,7 @@ func LongestSumSlice(vec1, vec2 []float64) (long []float64) {
 Subtracts in place `vec2` from `vec1`.
 
 Dimensions of `vec1` that are not present in `vec2` are not deincremented.
-Dimensions of `vec2` that are not present in `vec1` are omitted.
+Dimensions of `vec2` that are not present in `vec1` are ignored.
 */
 func ForceSub(vec1, vec2 []float64) {
 	defer callRecover()
@@ -121,4 +110,12 @@ Function assumes that n-dimensional vector has trailing
 zeros for all dimensions > n.
 Therefore it can operate on vectors with apparently different number of dimensions.
 */
-///func LongestDiffSlice(vec1, vec2 []float64) (long []float64)
+func LongestDiffSlice(vec1, vec2 []float64) (long []float64) {
+	// Loading slice
+	long = make([]float64, maxInt(len(vec1), len(vec2)))
+	copy(long, vec1)
+	// Subtracting
+	ForceSub(long, vec2)
+	// Rest
+	return
+}
