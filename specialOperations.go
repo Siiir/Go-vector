@@ -14,7 +14,7 @@ func Normalized(vec []float64) (normalized []float64) {
 
 // Every `element` in given slice is transformed into f(`element`)
 // in place.
-func Remap(sl []float64, f func(float64) float64) {
+func Remap[inT interface{}](sl []inT, f func(inT) inT) {
 	for i := range sl {
 		sl[i] = f(sl[i])
 	}
@@ -25,10 +25,11 @@ Return new slice with every element
 being an image of its counterpart from given slice.
 Where `f` is projecting function.
 */
-func Remaped(sl []float64,
-	f func(float64) float64,
-) (new []float64) {
-	new = make([]float64, len(sl))
+func Remaped[inT interface{}, outT interface{}](
+	sl []inT,
+	f func(inT) outT,
+) (new []outT) {
+	new = make([]outT, len(sl))
 	for i := range sl {
 		new[i] = f(sl[i])
 	}
