@@ -17,7 +17,7 @@ func CalcNorm(vec []float64) (norm float64) {
 
 // Returns the number of trailing zeros in given vector.
 func NumOfTrailingZeros(vec []float64) (quantity uint) {
-	defer recover()
+	defer callRecover()
 	for i := len(vec) - 1; ; i-- {
 		if vec[i] == 0 {
 			quantity++
