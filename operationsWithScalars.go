@@ -27,3 +27,28 @@ func QuotWithScalar(vec []float64, scalar float64) (prod []float64) {
 	DivByScalar(prod, scalar)
 	return
 }
+
+/*
+Returns `vec` to the power of `exp`.
+If exp mod 2 == 0, returns instance of float64 .
+Otherwise returns instance of []float64 .
+*/
+func Pow(vec []float64, exp uint) (scalarOrVec interface{}) {
+	doReturnVec := exp&1 == 1
+	y := 1.0
+	mult := Sq(vec)
+	for {
+		exp >>= 1
+		if exp == 0 {
+			break
+		}
+		if exp&1 == 1 {
+			y *= mult
+		}
+		mult *= mult
+	}
+	if doReturnVec {
+		return ProdWithScalar(vec, y)
+	}
+	return y
+}

@@ -59,3 +59,36 @@ func TestDivByScalar(t *testing.T) {
 // func TestProdWithScalar(t *testing.T) ommited, because all subfunctions are tested.
 
 // func TestQuotWithScalar(t *testing.T) ommited, because all subfunctions are tested.
+
+func TestPow(t *testing.T) {
+	// Definitions
+	const tQuantity = 6
+	ArgTab := [tQuantity]struct {
+		vec []float64
+		exp uint
+	}{
+		{[]float64{}, 9043233},
+		{[]float64{1, 3, 45, 324e-5}, 1},
+		{[]float64{0, 0, 0, 0}, 34598234},
+		{[]float64{7, 0, 22, -8}, 2},
+		{[]float64{7, 0, 22, -8}, 6},
+		{[]float64{4, 5, 1}, 3},
+	}
+	ExpectTab := []interface{}{
+		[]float64{},
+		[]float64{1, 3, 45, 324e-5},
+		0.0,
+		49.0 + 0.0 + 484.0 + 64.0,
+		math.Pow(49.0+0.0+484.0+64.0, 3),
+		[]float64{42 * 4, 42 * 5, 42 * 1},
+	}
+	for i, args := range ArgTab {
+		vec, exp := args.vec, args.exp
+		ex := ExpectTab[i]
+		got := Pow(vec, exp)
+		if !reflect.DeepEqual(ex, got) {
+			t.Errorf("Test case %d failed! expect != got\n%v != %v",
+				i, ex, got)
+		}
+	}
+}

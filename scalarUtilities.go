@@ -5,8 +5,8 @@ import (
 	"unsafe"
 )
 
-// Casts *float64 into uintptr
-func newUintptr(val *float64) uintptr {
+// Casts *T into uintptr
+func newUintptr[T interface{}](val *T) uintptr {
 	return uintptr(unsafe.Pointer(val))
 }
 
@@ -16,7 +16,7 @@ func newFloat64Ptr(uPtr uintptr) *float64 {
 }
 
 // Returns logical value of `val`∈⟨`leftInclusiveBound`,`rightInclusiveBound`⟩
-func ptrInRange(val, leftInclusiveBound, rightInclusiveBound *float64) bool {
+func ptrInRange[T interface{}](val, leftInclusiveBound, rightInclusiveBound *T) bool {
 	v := newUintptr(val)
 	return (newUintptr(leftInclusiveBound) <= v && v <= newUintptr(rightInclusiveBound))
 }
