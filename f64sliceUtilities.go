@@ -93,5 +93,5 @@ func WithRandVals(length uint) []float64 {
 // Returns true if given slices are deeply equal,
 // but do not share any heap memory.
 func AreClones(v, u []float64) bool {
-	return !HeapSame(v, u) && DeepEqual(v, u)
+	return !AreSlicingSameArray(v, u) && DeepEqual(v, u)
 }
