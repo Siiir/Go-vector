@@ -1,9 +1,5 @@
 package vector
 
-import (
-	"reflect"
-)
-
 // Returns logical value of `leftInclusiveBound` > `rightInclusiveBound`
 // where pointers are treated as their binary values.
 func IsEmptyArray(leftInclusiveBound, rightInclusiveBound *float64) bool {
@@ -97,5 +93,5 @@ func WithRandVals(length uint) []float64 {
 // Returns true if given slices are deeply equal,
 // but do not share any heap memory.
 func AreClones(v, u []float64) bool {
-	return !AreSlicingSameArray(v, u) && reflect.DeepEqual(v, u)
+	return !HeapSame(v, u) && DeepEqual(v, u)
 }
