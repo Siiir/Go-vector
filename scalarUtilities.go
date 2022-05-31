@@ -1,6 +1,7 @@
 package vector
 
 import (
+	"math"
 	"math/rand"
 	"unsafe"
 )
@@ -65,4 +66,12 @@ func maxInt(i1, i2 int) (theLarger int) {
 		return i2
 	}
 	return i1
+}
+
+func cmp64bits[T any](p1, p2 *T) bool {
+	return *(*uint64)(unsafe.Pointer(p1)) == *(*uint64)(unsafe.Pointer(p2))
+}
+
+func f64ValEquivalence(fl1, fl2 float64) bool {
+	return (math.IsNaN(fl1) && math.IsNaN(fl2)) || fl1 == fl2
 }
