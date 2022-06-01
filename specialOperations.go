@@ -21,11 +21,11 @@ func Remap[inT any](sl []inT, f func(inT) inT) {
 }
 
 /*
-Return new slice with every element
+Return a new slice with every element
 being an image of its counterpart from given slice.
 Where `f` is projecting function.
 */
-func Remaped[inT any, outT any](
+func Remapped[inT any, outT any](
 	sl []inT,
 	f func(inT) outT,
 ) (new []outT) {

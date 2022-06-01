@@ -1,6 +1,8 @@
 package vector
 
-/*
+import "testing"
+
+
 func _TestNormalized(t *testing.T) {
 	// Definitions
 	const tcQuantity = 7
@@ -24,4 +26,7 @@ func _TestNormalized(t *testing.T) {
 		// if
 	}
 }
-*/
+
+func TestRemap(t *testing.T)
+
+func TestRemapped(t *testing.T)

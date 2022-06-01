@@ -72,6 +72,7 @@ func cmp64bits[T any](p1, p2 *T) bool {
 	return *(*uint64)(unsafe.Pointer(p1)) == *(*uint64)(unsafe.Pointer(p2))
 }
 
+// ! To be made public
 func f64ValEquivalence(fl1, fl2 float64) bool {
 	return (math.IsNaN(fl1) && math.IsNaN(fl2)) || fl1 == fl2
 }
