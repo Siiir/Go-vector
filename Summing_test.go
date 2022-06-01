@@ -134,7 +134,7 @@ func Test_SubtractingFunctions(t *testing.T) {
 		for i, vec2 := range ArgTab {
 			ForceSub(vec, vec2)
 			ex := ExpectTab[i]
-			if !reflect.DeepEqual(ex, vec) {
+			if !DeepEqual(ex, vec) {
 				t.Fatalf("\nTest case %d failed! expected != actual\n%v != %v",
 					i, ex, vec)
 			}
@@ -160,11 +160,11 @@ func Test_SubtractingFunctions(t *testing.T) {
 						i)
 				}
 				// If indeed impossible, than
-				if !reflect.DeepEqual(ex, vec) { //Shouldn't have changed.
+				if !DeepEqual(ex, vec) { //Shouldn't have changed.
 					t.Fatalf("\nTest case %d failed! expected != actual\n%v != %v",
 						i, ex, vec)
 				}
-			} else if ex = ExpectTab[i]; !reflect.DeepEqual(ex, vec) {
+			} else if ex = ExpectTab[i]; !DeepEqual(ex, vec) {
 				if ex == nil { // Actually impossible
 					t.Fatalf("\nTest case %d failed!\n"+
 						"Function should return true (and not perform addition), returned false.",
@@ -178,27 +178,33 @@ func Test_SubtractingFunctions(t *testing.T) {
 
 	// t.Run("Diff",...) ommited, because main subfunction has been tested.
 
-	/*t.Run("LongestDiffSlice", func(t *testing.T) {
+	t.Run("LongestDiffSlice", func(t *testing.T) {
 		// Definitions
-		vec := []float64{1}
-		ExpectTab := [tQuantity][]float64{
-			{1, 5, 7},
-			{1, -495.78, 14},
-			{1, 5, 21},
-			{2, 10, 28, 0},
-			{2, -490.78, 35, 9},
-			{2, -489.78, 35, 9},
-			{2, -489.78, 35, 9},
+		argTab := [tQuantity][2][]float64{
+			{nil, nil},
+			{{}, {}},
+			{{}, {-5}},
+			{{-9.7}, nil},
+			{{1, 2, 3}, {1, -2, 3, 0}}, //4.
+			{{4, 5}, {2, 3, 8, 7}},
+			{{0, 1, 5e200}, {0, 20}}, //6.
+		}
+		expectTab := [tQuantity][]float64{
+			{}, {}, {5}, {-9.7},
+			{0, 4, 0, 0}, //4.
+			{2, 2, -8, -7},
+			{0, -19, 5e200}, //6.
 		}
 
 		// Algorithm
-		for i, vec2 := range ArgTab {
-			vec = LongestDiffSlice(vec, vec2)
-			ex := ExpectTab[i]
-			if !reflect.DeepEqual(ex, vec) {
+		for i, args := range argTab {
+			got := LongestDiffSlice(args[0], args[1])
+			ex := expectTab[i]
+			if !DeepEqual(ex, got) {
+				//:{println(len(got), cap(got))
 				t.Fatalf("\nTest case %d failed! expected != got\n%v != %v",
-					i, ex, vec)
+					i, ex, got)
 			}
 		}
-	})*/
+	})
 }

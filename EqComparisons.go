@@ -15,7 +15,7 @@ func WeakEqual[T comparable](sl1, sl2 []T) (equal bool) {
 }
 
 /*!
-Works like `reflect.DeepEqual`, but faster. No benchmark yet!
+Works like `reflect.DeepEqual`, but faster.
 Returns true if one of following is true:
 	1. both slices are nil
 	2. both slices have same length and WeakEqual(sl1, sl2)==true
@@ -30,7 +30,7 @@ func DeepEqual[T comparable](sl1, sl2 []T) (equal bool) {
 
 /*
 Returns true if
-	both arrays own the same values (samely ordered) on the heap
+	both arrays described by slices own the same values (samely ordered) on the heap
 	and len(`sl1`)==len(`sl2`).
 */
 func HeapEqual[T comparable](sl1, sl2 []T) (equal bool) {
@@ -40,7 +40,7 @@ func HeapEqual[T comparable](sl1, sl2 []T) (equal bool) {
 /*
 Returns true if both slices satisfy any of these conditions:
 	1. are nil
-	2. don't slice any array at all and are not nil
+	2. slice an empty array
 	3. are slicing the same part of the same array
 */
 func HeapSame[T any](sl1, sl2 []T) (equal bool) {

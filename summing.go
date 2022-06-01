@@ -46,6 +46,7 @@ func Sum(vec1, vec2 []float64) (sum []float64, impossible bool) {
 
 /*
 Return sum of vectors `vec1` & `vec2`.
+Returned vector will have max(`vec1`.len(),`vec2`.len()) length.
 
 Function assumes that n-dimensional vector has trailing
 zeros for all dimensions > n.
@@ -105,6 +106,7 @@ func Diff(vec1, vec2 []float64) (diff []float64, impossible bool) {
 
 /*
 Return difference of vectors `vec1` & `vec2`.
+Returned vector will have max(`vec1`.len(),`vec2`.len()) length.
 
 Function assumes that n-dimensional vector has trailing
 zeros for all dimensions > n.
