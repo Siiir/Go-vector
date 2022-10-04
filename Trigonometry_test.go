@@ -20,8 +20,8 @@ func testFunc2VecsToF64(t *testing.T, f func2VecsToF64, argSlice [][2][]float64,
 	for i, args := range argSlice {
 		ex := expectSlice[i]
 		got := f(args[0], args[1])
-		if !f64ValEquivalence(ex, got) {
-			t.Fatalf("\n%s %d. tc failed! !f64ValEquivalence(ex, got)\nex=%v\ngot=%v\n",
+		if !F64ValEquivalence(ex, got) {
+			t.Fatalf("\n%s %d. tc failed! !F64ValEquivalence(ex, got)\nex=%v\ngot=%v\n",
 				t.Name(), i, ex, got,
 			)
 		}

@@ -14,9 +14,9 @@ func WeakEqual[T comparable](slA, slB []T) (equal bool) {
 	return
 }
 
-// Equivalent to: _WeakRelatedBy(vecA, vecB, f64ValEquivalence)
+// Equivalent to: _WeakRelatedBy(vecA, vecB, F64ValEquivalence)
 func _WeakEquivalent(vecA, vecB []float64) bool {
-	return _WeakRelatedBy(vecA, vecB, f64ValEquivalence)
+	return _WeakRelatedBy(vecA, vecB, F64ValEquivalence)
 }
 
 /*
@@ -33,9 +33,9 @@ func DeepEqual[T comparable](slA, slB []T) (equal bool) {
 	return len(slA) == len(slB) && WeakEqual(slA, slB)
 }
 
-// Equivalent to: _DeepRelatedBy(vecA, vecB, f64ValEquivalence)
+// Equivalent to: _DeepRelatedBy(vecA, vecB, F64ValEquivalence)
 func _DeepEquivalent(vecA, vecB []float64) bool {
-	return _DeepRelatedBy(vecA, vecB, f64ValEquivalence)
+	return _DeepRelatedBy(vecA, vecB, F64ValEquivalence)
 }
 
 /*
@@ -47,9 +47,9 @@ func HeapEqual[T comparable](slA, slB []T) (equal bool) {
 	return cap(slA) == cap(slB) && DeepEqual(slA, slB)
 }
 
-// Equivalent to: _HeapRelatedBy(vecA, vecB, f64ValEquivalence)
+// Equivalent to: _HeapRelatedBy(vecA, vecB, F64ValEquivalence)
 func _HeapEquivalent(vecA, vecB []float64) bool {
-	return _HeapRelatedBy(vecA, vecB, f64ValEquivalence)
+	return _HeapRelatedBy(vecA, vecB, F64ValEquivalence)
 }
 
 /*

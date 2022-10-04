@@ -60,7 +60,7 @@ func AreSlicingSameArray(sl1, sl2 []float64) bool {
 // Fills []float64 with random (normal & abnormal) float values.
 func FillWithRandF64s(slice []float64) {
 	for i := range slice {
-		slice[i] = randF64()
+		slice[i] = RandF64()
 	}
 }
 
@@ -77,7 +77,7 @@ func WithRandF64s(length uint) []float64 {
 // gives all values random sign (- or +).
 func FillWithRandVals(slice []float64) {
 	for i := range slice {
-		slice[i] = randNormalF64()
+		slice[i] = RandNormalF64()
 	}
 }
 

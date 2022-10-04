@@ -55,16 +55,16 @@ func Test_EqualityFuncs(t *testing.T) {
 	}
 
 	t.Run("HeapSame[float64]", func(t *testing.T) { //-=> HeapSame
-		expectTab := [eqFuncsTcQuantity]bool{true, true, true, true}
+		expectTab := [equalityFuncsTcQuantity]bool{true, true, true, true}
 		testCases(t, HeapSame[float64], expectTab[:])
 	})
 	t.Run("HeapEqual", func(t *testing.T) {
-		expectTab := [eqFuncsTcQuantity]bool{true, true, true, true, true, true, true}
+		expectTab := [equalityFuncsTcQuantity]bool{true, true, true, true, true, true, true}
 		testCases(t, HeapEqual[float64], expectTab[:])
 
 	})
 	t.Run("DeapEqual", func(t *testing.T) {
-		expectTab := [eqFuncsTcQuantity]bool{
+		expectTab := [equalityFuncsTcQuantity]bool{
 			true, true, true, true, true,
 			true, true, true, true,
 		}
@@ -76,7 +76,7 @@ func Test_EqualityFuncs(t *testing.T) {
 		)
 	})
 	t.Run("WeakEqual[float64]", func(t *testing.T) {
-		expectTab := [eqFuncsTcQuantity]bool{
+		expectTab := [equalityFuncsTcQuantity]bool{
 			true, true, true, true, true,
 			true, true, true, true, true,
 			true, true, true, true, true,
@@ -192,21 +192,21 @@ func createRelationFuncLauncher(
 
 func Benchmark_DeepEqualFuncs(b *testing.B) {
 	b.Run("eqFuncsArgTab", func(b *testing.B) {
-		const launchesAmount = 5000000
+		const launchesAmount = 5_000_000
 		b.Run(
 			"DeepEqual[float64]",
-			createRelationFuncLauncher(DeepEqual[float64], eqFuncsArgTab[:], launchesAmount),
+			createRelationFuncLauncher(DeepEqual[float64], equalityFuncsArgTab[:], launchesAmount),
 		)
 		b.Run(
 			"reflect_DeepEqualOfF64SliceWrapper",
-			createRelationFuncLauncher(reflect_DeepEqualOfF64SliceWrapper, eqFuncsArgTab[:], launchesAmount),
+			createRelationFuncLauncher(reflect_DeepEqualOfF64SliceWrapper, equalityFuncsArgTab[:], launchesAmount),
 		)
 		b.Run(
 			"reflect.DeepEqual",
 			func(_ *testing.B) {
 				lA := launchesAmount
 				for ; lA > 0; lA-- {
-					for _, argsPair := range eqFuncsArgTab {
+					for _, argsPair := range equalityFuncsArgTab {
 						reflect.DeepEqual(argsPair[0], argsPair[1])
 					}
 				}
